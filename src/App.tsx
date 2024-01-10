@@ -1,14 +1,24 @@
-import React from 'react'; 
-import './App.scss';
 import { Layout } from './Components/Layout/Layout';
+import { Header } from './Components/Header/Header';
+import { Main } from './Components/Main/Main';
+import { Footer } from './Components/Footer/Footer';
+import './App.scss';
 
 const App:React.FC = () => <Layout
   className='App'
   theme='app'
   template={{
-    header: <p>Header</p>,
-    main: <p>Main</p>,
-    footer: <p>Footer</p>,
+    header: <Header 
+    
+    />,
+
+    main: <Main 
+    
+    />,
+
+    footer: <Footer 
+    
+    />,
   }}
 />
 
