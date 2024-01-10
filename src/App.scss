@@ -1,0 +1,25 @@
+$max-width: 1200px;
+
+@mixin layoutWidth {
+  max-width: $max-width;
+}
+
+.App {
+  background-color: red;
+
+  & > * {
+    @include layoutWidth();
+  }
+
+  &__header {
+    background-color: green;
+  }
+
+  &__main {
+    background-color: yellow;
+  }
+
+  &__footer {
+    background-color: aqua;
+  }
+}
