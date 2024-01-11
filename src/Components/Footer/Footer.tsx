@@ -1,5 +1,7 @@
 export const Footer: React.FC = () => {
     return <>
-        There will be footer content
+        <p>cos pierwsze</p>
+        <p>second thing</p>
+        <p>&copy 2024 Quizzy</p>
     </>;
 }

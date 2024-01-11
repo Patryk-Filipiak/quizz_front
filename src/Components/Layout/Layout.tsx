@@ -1,19 +1,9 @@
 import { AppLayout } from './AppLayout';
+import { AppLayoutTemplate, TabLayoutTemplate } from './types';
 import './Layout.scss';
 
-type AppLayoutTemplate = {
-    header: React.ReactNode | null;
-    main: React.ReactNode | null;
-    footer: React.ReactNode | null;
-
-}
-
-type TabLayoutTemplate = {
-
-}
-
 export const Layout: React.FC<{
-    theme?: 'row' | 'column' | 'app';
+    theme?: 'row' | 'column' | 'app' | 'tab';
     children?: React.ReactNode;
     template?: AppLayoutTemplate | TabLayoutTemplate;
     className?: string;
@@ -26,7 +16,7 @@ export const Layout: React.FC<{
     >
         {theme === 'app' && <AppLayout
             className={className}
-            {...template}
+            {...(template as AppLayoutTemplate)}
         />}
 
     </section>)
