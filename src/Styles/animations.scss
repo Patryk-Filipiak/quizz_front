@@ -1,0 +1,9 @@
+@keyframes toggleDown {
+    from {
+      max-height: 0px;
+    }
+  
+    to {
+      max-height: calc(100vh - 300px);
+    }
+  }

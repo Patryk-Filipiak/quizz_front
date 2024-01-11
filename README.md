@@ -1,2 +1,3 @@
-# quizz_front
-Front End Part of Online Multiplayer Quizz Service
+FrontEnd Part for online Quizz Service
+
+5% done, project init, basic app layout styled
