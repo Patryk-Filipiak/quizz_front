@@ -1,0 +1,13 @@
+@import "../../Styles/Mixins//AppLayout.scss";
+
+.footer {
+    position: relative;
+    max-width: var(--max-layout-width);
+    background-color: var(--foot-color);
+    color: rgba(255, 255, 255, 1);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 16px;
+    @include SpillBackground;
+}
