@@ -1,45 +1,50 @@
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import { List } from '../List/List';
-import './Navigation.scss';  
+import cn from 'classnames'; 
 import { CSSIcon } from '../CSSIcon/CSSIcon';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react'; 
+import './Header.scss';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+    children?: ReactNode;
+}
+
+export const Header: React.FC<HeaderProps> = ({ children }) => {
     const [isListVisible, setIsListVisible] = useState<boolean>(false);
     
-    return <>
-        <h1 
-            className={cn(['App__title', 'title', 'title--head'])}
+    return (
+        <header
+            className='header'
         >
-            Quizzy
-        </h1>
+            <h1 
+                className={cn(['header__title', 'title', 'title--head'])}
+            >
+                Quizzy
+            </h1>
 
-        <List 
-            htmlTag='nav'
-            className={cn({open: isListVisible, navigation: true})}
-            container='ul'
-            items={[
-                {title: 'Start', to: '/start'},
-                {title: 'Oczekujące', to: '/pending'},
-                {title: 'Zaloguj się', to: '/account'},
-            ]}
-            component={(link:{ title: string; to: string }) => (
-                <Link 
+            <nav className={cn('header__nav', {
+                open: isListVisible,
+            })}> 
+                {[
+                    {title: 'Start', to: '/start'},
+                    {title: 'Oczekujące', to: '/pending'},
+                    {title: 'Zaloguj się', to: '/account'},
+                ].map((link, key) => <Link 
+                    key={key}
                     to={link.to}
-                    className={cn(['navigation__item', 'link', 'link--headerNav'])}
+                    className={cn(['header__nav-item', 'link', 'link--headerNav'])}
                 >
                     {link.title}
-                </Link>
-            )}
-        >  
+                </Link>)} 
+            </nav>
+
             <CSSIcon 
                 type="burger"
-                className={cn('navigation__burger', {
+                className={cn('header__icon', {
                     open: isListVisible,
                 })}
                 onClick={() => setIsListVisible(curent => !curent)}
             />
-        </List>
-    </>;
+
+            {children}
+        </header>);
 }

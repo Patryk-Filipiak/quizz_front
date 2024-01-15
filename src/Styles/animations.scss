@@ -7,3 +7,14 @@
       max-height: calc(100vh - 300px);
     }
   }
+
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }

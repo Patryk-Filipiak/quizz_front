@@ -48,7 +48,7 @@ interface Props<T> {
 
             {container ? <ContainerTag
                 className={cn(['list__container'], {
-                    [className + '__container' || '']: !!className, 
+                    [className + '-container' || '']: !!className, 
                     horizontal: dir === 'row',
                 })}
             >
