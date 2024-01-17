@@ -1,7 +1,7 @@
 @import '../../Styles/Mixins/AppLayout.scss';
 .header {
-    position: relative;
-    max-width: var(--max-layout-width);
+    position: relative; 
+    width: 100%;
     background-color: var(--head-color);
     display: flex;
     align-items: center;

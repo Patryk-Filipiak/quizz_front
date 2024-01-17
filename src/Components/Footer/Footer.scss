@@ -1,8 +1,8 @@
 @import "../../Styles/Mixins//AppLayout.scss";
 
 .footer {
-    position: relative;
-    max-width: var(--max-layout-width);
+    position: relative; 
+    width: 100%;
     background-color: var(--foot-color);
     color: rgba(255, 255, 255, 1);
     display: flex;
