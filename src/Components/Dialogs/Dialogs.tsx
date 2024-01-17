@@ -1,11 +1,15 @@
 import cn from 'classnames';
 import './Dialogs.scss';
+import { useDialogContext } from '../../Context/useDialogContext';
 
 interface DialogsProps {
     className?: string;
 }
 
 export const Dialogs: React.FC<DialogsProps> = ({ className }) => {
+
+    const { popup, toasts } = useDialogContext();
+
     return (<main
         className={cn('dialogs', {
             [className || '']: !!className,
@@ -15,7 +19,7 @@ export const Dialogs: React.FC<DialogsProps> = ({ className }) => {
             className='dialogs__popup'
         >
             <p className='dialogs__popup-container'>
-                Jakiś tam popup!
+                {popup}
             </p>
 
         </section>
@@ -23,13 +27,12 @@ export const Dialogs: React.FC<DialogsProps> = ({ className }) => {
         <section
             className='dialogs__toasts toasts'
         >
-            <article className='toasts__item'>
-                New Password has been sent!
-            </article>
-
-            <article className='toasts__item'>
-                Wrong Password
-            </article>
+            {toasts.map(({ content }, key) => (<article 
+                className='toasts__item'
+                key={key}
+            >
+                {content}
+            </article>))}  
         </section>
     </main>)
 }

@@ -1,19 +1,18 @@
-import { Link } from 'react-router-dom';
-import cn from 'classnames'; 
-import { CSSIcon } from '../CSSIcon/CSSIcon';
-import { ReactNode, useState } from 'react'; 
+import cn from 'classnames';  
 import './Header.scss';
+import { Navigation } from './Navigation';
+import { useState } from 'react';
+import { CSSIcon } from '../CSSIcon/CSSIcon';
+ 
 
-interface HeaderProps {
-    children?: ReactNode;
-}
-
-export const Header: React.FC<HeaderProps> = ({ children }) => {
+export const Header: React.FC <{ className?: string }>= ( { className } ) => {
     const [isListVisible, setIsListVisible] = useState<boolean>(false);
-    
+
     return (
         <header
-            className='header'
+            className={cn('header', {
+                [className || '']: !!className
+            })}
         >
             <h1 
                 className={cn(['header__title', 'title', 'title--head'])}
@@ -21,30 +20,17 @@ export const Header: React.FC<HeaderProps> = ({ children }) => {
                 Quizzy
             </h1>
 
-            <nav className={cn('header__nav', {
-                open: isListVisible,
-            })}> 
-                {[
-                    {title: 'Start', to: '/start'},
-                    {title: 'Oczekujące', to: '/pending'},
-                    {title: 'Zaloguj się', to: '/account'},
-                ].map((link, key) => <Link 
-                    key={key}
-                    to={link.to}
-                    className={cn(['header__nav-item', 'link', 'link--headerNav'])}
-                >
-                    {link.title}
-                </Link>)} 
-            </nav>
-
-            <CSSIcon 
-                type="burger"
-                className={cn('header__icon', {
-                    open: isListVisible,
-                })}
-                onClick={() => setIsListVisible(curent => !curent)}
+            <Navigation 
+                isOpen={isListVisible}
+                changeState={() => setIsListVisible(current => !current)}
             />
 
-            {children}
+            <CSSIcon 
+            type="burger"
+            className={cn('header__icon', {
+                open: isListVisible,
+            })}
+            onClick={() => setIsListVisible(current => !current)}
+        /> 
         </header>);
 }

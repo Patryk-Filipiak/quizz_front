@@ -1,20 +1,28 @@
-import { Input } from "../../Input/Input";
-import { Layout } from "../../Layout/Layout" 
+import { useSelector } from "react-redux"; 
+import './AccountPage.scss'
+import { RootState } from "../../../State/store";
+import { LoggedOut } from "./LoggedOut";
+import { LoggedIn } from "./LoggedIn";
+import { Content } from "../../Layout/Content";
+import cn from 'classnames'; 
 
-export const AccountPage: React.FC = () => {
-    return (<Layout
-        tagName="main" 
-        theme="page"
-        className="accountPage"
-    >
-        <h2> Hello </h2>
-        <Layout>
-            <Input title="NAzwa użytkownika" type="text" value="ero!"/>
-            <Input title="Hasło" type="password" value="ero666" />
-            <Input title="Adres email" type="email" value="patryk@op.pl" />
-            <Input title="Poziom" type="radio" options={['Łatwy', 'Średni', 'Trudny']} value="2" />
-            <Input title="Opis" type="textarea" value="testujemy!"/>
-        </Layout>
+export const AccountPage:React.FC<{ className?: string }> = ({ className })  => {
+    const { isLoggedIn, loading } = useSelector((state:RootState) => state.account);
 
-    </Layout>);
+    const [contentDepends, content] = Content.depends();
+
+    contentDepends(<p>
+        Please wait, data is loading.    
+    </p>,[loading])
+    (<LoggedOut />, [!loading, !isLoggedIn])
+    (<LoggedIn />, [!loading, isLoggedIn]);
+
+
+
+    return (<Content.Page 
+        className={cn('accountPage', {
+            [className || '']: !!className,
+        })}
+        children={content()}
+    /> );
 }
