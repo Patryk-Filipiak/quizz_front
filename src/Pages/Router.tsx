@@ -1,10 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { PageNotFound } from "../Components/Pages/PageNotFound";
-import { AccountPage } from "../Components/Pages/AccountPage/AccountPage";
-import { PendingPage } from "../Components/Pages/PendingPage/PendingPage";
+import { PageNotFound } from "./PageNotFound";
+import { AccountPage } from "./AccountPage/AccountPage";
+import { PendingPage } from "./PendingPage/PendingPage";
 import React from "react";
 
-export const AppRouter:React.FC <{ className?: string }> = ( { className = ''} ) => {
+export const Router:React.FC <{ className?: string }> = ( { className = ''} ) => {
 
    
 

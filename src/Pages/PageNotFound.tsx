@@ -1,5 +1,5 @@
-import { useDialogContext } from "../../Context/useDialogContext";
-import { Content } from "../Layout/Content";
+import { useDialogContext } from "../Context/useDialogContext";
+import { Content } from "../Components/Layout/Content";
 import cn from 'classnames';
 
 export const PageNotFound:React.FC<{ className?: string }> = ({ className }) => {

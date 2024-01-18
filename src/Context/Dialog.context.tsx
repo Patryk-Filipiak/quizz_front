@@ -1,17 +1,9 @@
 import React, { ReactNode, useState } from 'react';  
+import { DialogContextInterface, Toast } from './Dialog.types';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../State/store';
 
-export interface Toast {
-  id: string;
-  content: string | ReactNode;
-}
 
-export interface DialogContextInterface { 
-  toasts: Toast[];
-  popup: (ReactNode | null);
-  showToast: (message: string, time?:number) => void;
-  showPopup: (content: ReactNode) => void;
-
-}
 
 export const DialogContext = React.createContext<DialogContextInterface | null>(null);
 
@@ -21,24 +13,31 @@ export const DialogProvider = ({ children }: {
  
   const [toastList, setToastList] = useState<Toast[]>([]);
   const [popup, setPopup] = useState<ReactNode | null>(null);
-
+  const dispatch = useDispatch<AppDispatch>(); 
+  
   return (
     <DialogContext.Provider value={{ 
       toasts: toastList,
       popup: popup,
-      showToast: (message: string, time:number = 3000) => {
+      account: useSelector((state:RootState) => state.account),
+      
+      showToast: (content: string | ReactNode, time:number = 3000) => {
         const id = String(Date.now() + Math.random());
         const toast:Toast = { 
           id,
-          content: message,
+          content: content,
         } 
         setToastList(list => [toast, ...list]);
         setTimeout(() =>  setToastList(list => list.filter((toast) => toast.id !== id)), time);
       },
+
       showPopup: (content: ReactNode) => {
 
-      }
-    }}
+      },
+
+      dispatch: dispatch,
+  
+  }}
     >
       {children}
     </DialogContext.Provider>

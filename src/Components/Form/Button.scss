@@ -1,7 +1,7 @@
 .button {
     width: 100%;
     font-size: 16px;
-    padding: 12px;
+    padding: 12px 24px;
     font-family: var(--font-text);
     border-radius: 12px;
     cursor: pointer;
@@ -12,6 +12,10 @@
     box-shadow: inset 0px 0px 25px 4px rgba(255, 255, 255, .4),
     0px 3px 11px 3px rgba(0, 0, 0, 1);
     transition: all 0.3s linear;
+
+    &--small {
+        width: auto;
+    }
 
     &--blue {
         background-color: var(--head-color);
@@ -35,12 +39,12 @@
 
     &--orange-big {
         @extend .button--orange;
-        padding: 36px 12px;
+        padding: 36px 36px;
     }
 
     &--violet-big {
         @extend .button--violet;
-        padding: 36px 12px;
+        padding: 36px 36x;
     }
 
     &:hover {
