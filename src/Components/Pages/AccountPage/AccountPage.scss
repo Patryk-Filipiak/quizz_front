@@ -1,0 +1,36 @@
+@import '../../../Styles/variables.scss';
+
+.accountPage {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__buttons {  
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+        min-width: 280px;
+    }
+
+    &__buttons {
+        flex: 1;
+        gap: 24px;
+        min-width: 280px;
+    }
+
+    &__actions {  
+        width: 100%;
+        flex-wrap: wrap;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
+        gap: inherit; 
+    }
+}

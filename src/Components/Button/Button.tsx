@@ -4,7 +4,7 @@ import './Button.scss';
 
 export const Button: React.FC<{
     children?: ReactNode;
-    type?: 'green'
+    type?: string;
     onClick?: () => void;
     
 }> = ({ children, type, onClick = () => null }) => {

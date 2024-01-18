@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import cn from 'classnames'; 
 import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';  
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import './Content.scss';
 
 type DependsFunction = (node: ReactNode, dependencies?: boolean[]) => DependsFunction;
 
@@ -20,14 +22,15 @@ interface ContentType {
     Tabs: React.FC<{
         children?: ReactNode; 
         selected?: string;
-    }>;
+    }>; 
+    useParam: () => (params: { [key: string]: string }) => void;
     depends: () => [DependsFunction, () => ReactNode[]];
 }
 
 export const Content:ContentType = {
     Page({ className, children }) {
         return (<main
-            className={cn('content', {
+            className={cn(['App__content', 'content'], {
                 [className || '']: !!className,
             })}
         >
@@ -43,9 +46,22 @@ export const Content:ContentType = {
             if (!tabs.includes(selected)) { 
                 return setSearchParams(current => ({...current, [selector]: tabs[0]}))
             } 
-        }, [selected, selector, setSearchParams, children]);
+        }, [selected, children]);
 
         return <>{React.Children.toArray(children).filter(child => (child as ReactElement).props.id === selected)}</>
+    },
+
+    useParam() {
+        const navigate = useNavigate();
+        return (params) => {
+            const searchParams = new URLSearchParams(window.location.search);
+            Object.keys(params).forEach(key => searchParams.set(key, params[key]))
+            navigate({
+                pathname: window.location.pathname,
+                search: searchParams.toString()
+            });
+        }
+        
     },
 
     Tabs({children, selected}) {
@@ -55,7 +71,7 @@ export const Content:ContentType = {
                 return tabs[0];
             } 
             return selected;
-        }, [selected, children]);
+        }, [selected]);
 
         return <>{React.Children.toArray(children).filter(child => (child as ReactElement).props.id === active)}</>
     },

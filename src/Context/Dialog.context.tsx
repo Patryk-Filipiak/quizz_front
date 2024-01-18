@@ -1,11 +1,11 @@
 import React, { ReactNode, useState } from 'react';  
 
-interface Toast {
+export interface Toast {
   id: string;
   content: string | ReactNode;
 }
 
-interface DialogContextInterface { 
+export interface DialogContextInterface { 
   toasts: Toast[];
   popup: (ReactNode | null);
   showToast: (message: string, time?:number) => void;
