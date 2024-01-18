@@ -4,9 +4,50 @@
     padding: 12px;
     font-family: var(--font-text);
     border-radius: 12px;
+    cursor: pointer;
     border: 4px solid rgba(71, 71, 71);
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 20px;
+    box-shadow: inset 0px 0px 25px 4px rgba(255, 255, 255, .4),
+    0px 3px 11px 3px rgba(0, 0, 0, 1);
+    transition: all 0.3s linear;
 
-    &--green {
-        background-color: green;
+    &--blue {
+        background-color: var(--head-color);
+        color: rgba(71, 71, 71, 1);
+        text-shadow: 2px 2px rgba(255, 255, 255, .5);
+        box-shadow: inset 0px 0px 25px 4px rgba(125, 125, 125, .4),
+                    0px 3px 11px 3px rgba(0, 0, 0, 1);
+    }
+
+    &--violet {
+        background-color: var(--foot-color);
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 2px 2px rgba(71, 71, 71, .5);
+    }
+
+    &--orange {
+        background-color: var(--middle-color);
+        color: rgba(255, 255, 255, 1);
+        text-shadow: 2px 2px rgba(71, 71, 71, .5);
+    }
+
+    &--orange-big {
+        @extend .button--orange;
+        padding: 36px 12px;
+    }
+
+    &--violet-big {
+        @extend .button--violet;
+        padding: 36px 12px;
+    }
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &:active {
+        transform: scale(0.95);
     }
 }

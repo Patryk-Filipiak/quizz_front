@@ -1,38 +1,42 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AuthApi } from "../../API/Auth";
-import { RootState } from "../store";
-interface AccountData {
+import { RootState } from "../store";  
+import { DialogContextInterface } from "../../Context/Dialog.context"; 
+export interface AccountData {
     username: string;
     flags: number;
 }
 
-interface AccountState {
+export interface AccountState {
     loading: boolean;
     isLoggedIn: boolean;
+    exhausted: boolean;
     data: AccountData;
 }
 
 const initialState: AccountState = {
     loading: true,
     isLoggedIn: false,
+    exhausted: false,
     data: {
         username: '',
         flags: 0,
     }
 }
 
+
 const accountSlice = createSlice({
     name: "account",
     initialState,
     reducers: {
-        setUsername: (state:AccountState, action: PayloadAction<string>) => {
-            console.log('Chcesz zmienic username', state, action)
+        setUsername: (state:AccountState, action: PayloadAction<string>) => { 
+            console.log('Change username')
             state.data.username = action.payload;
         },
     },
 
     extraReducers: (builder) => {
-        builder.addCase(checkIsLoggedIn.rejected, (state) => {
+        builder.addCase(checkIsLoggedIn.rejected, (state) => { 
                 state.loading = false;
                 state.isLoggedIn = false;
         }).addCase(checkIsLoggedIn.fulfilled, (state, action: PayloadAction<AccountData>) => {
@@ -43,10 +47,22 @@ const accountSlice = createSlice({
 
         builder.addCase(accountLogin.fulfilled, (state, action: PayloadAction<AccountData>) => { 
             state.data = action.payload;
-            state.isLoggedIn = true;
-        }).addCase(accountLogin.rejected, (state, error) => {
-            console.log('Error logowania.', state, error);
+            state.isLoggedIn = true; 
+        }).addCase(accountLogin.pending, (state) => {
+            state.exhausted = true; 
+        }).addCase(accountLogin.rejected, (state, action) => {
+            state.exhausted = false;
+            const { dialog } = action.meta.arg; 
+            return dialog.showToast(action.error && action.error.name === 'Error' ? action.error.message || '' : 'Niepoprawne dane logowania.');
         }); 
+
+        builder.addCase(accountLogout.fulfilled, (state) => {
+            state.data = initialState.data;
+            state.isLoggedIn = false;
+        }).addCase(accountLogout.rejected, (state, action) => {
+            const { dialog } = action.meta.arg; 
+            return dialog.showToast('Błąd wylogowywania? Albo masz problem z internetem, albo już się wylogowałeś na innej karcie :)');
+        })
     }
 });
 
@@ -61,14 +77,22 @@ export const checkIsLoggedIn = createAsyncThunk(
 
 export const accountLogin = createAsyncThunk(
     "account/accountLogin",
-    async (password: string, thunkAPI) => {
+    async ({ password }: { password: string; dialog: DialogContextInterface }, thunkAPI) => { 
         const { account } = thunkAPI.getState() as RootState; 
-        const { data } = await AuthApi.login(account.data.username.trim(), password.trim());
-        
+
+        if( !password || !account.data.username || password.trim().length < 6 || account.data.username.trim().length < 3) {
+            throw new Error('Wpisz poprawne dane...');
+        }
+
+        const { data } = await AuthApi.login(account.data.username.trim(), password.trim()); 
+ 
         return data;
     }
 );
 
+export const accountLogout = createAsyncThunk(
+    "account/accountLogout",
+    async (_: { dialog: DialogContextInterface }, thunkAPI) => (await AuthApi.logout()).data);
 
 
 export const { setUsername } = accountSlice.actions;
