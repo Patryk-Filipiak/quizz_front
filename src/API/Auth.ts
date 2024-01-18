@@ -16,10 +16,17 @@ export abstract class AuthApi {
         withCredentials: true,
     });
  
-    static login = async (username: string, password: string):Promise<{ data: AccountData}> => {
-        console.log('Proba logina:', username, password)
+    static login = async (username: string, password: string):Promise<{ data: AccountData}> => { 
         return axios.post(`${BASE_URL}/login`, {
             username, password
+        }, {
+            withCredentials: true,
+        })
+    }
+
+    static singup = async (username: string, password: string, email: string):Promise<{ data: AccountData}> => { 
+        return axios.post(`${BASE_URL}/singup`, {
+            username, password, email
         }, {
             withCredentials: true,
         })

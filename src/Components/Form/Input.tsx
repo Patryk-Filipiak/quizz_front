@@ -18,7 +18,6 @@ export const Input: React.FC<Props> = ({
     onChange
 }) => {
     const [inputValue, setInputValue] = useState<string>(value);
-
     const inputParams = {type, value: inputValue, options}
 
     const onChangeValue = (v: string) => {
@@ -30,12 +29,19 @@ export const Input: React.FC<Props> = ({
         <p className="Input__title">
             {title}
         </p>
+
         {['text', 'password', 'email'].includes(type) && <input 
             className="Input__field" {...inputParams} 
             onChange={(e) => onChangeValue(e.target.value)} 
         />}
-        {type === 'textarea' && <textarea className='Input__field' {...inputParams} onChange={(e) => setInputValue(e.target.value)} />}
-        {type === 'radio' && <RadioInput {...inputParams} onChange={(opt: number) => setInputValue('' + opt)} />}
+
+        {type === 'textarea' && <textarea
+            className='Input__field' 
+            {...inputParams}
+            onChange={(e) => onChangeValue(e.target.value)}
+        />}
+
+        {type === 'radio' && <RadioInput {...inputParams} onChange={onChangeValue} />}
         
     </label>)
 }

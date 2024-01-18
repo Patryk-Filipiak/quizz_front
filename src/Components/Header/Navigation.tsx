@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link } from "react-router-dom"
 import cn from 'classnames';
 import { useSelector } from "react-redux";
@@ -8,21 +9,16 @@ export const Navigation: React.FC<{
     isOpen: boolean;
     changeState: () => void;
 }> = ({ isOpen, changeState }) => {
-    const { isLoggedIn, loading, data } = useSelector((state:RootState) => state.account);
+    const { isLoggedIn, loading } = useSelector((state:RootState) => state.account);
 
-    const navItems = useMemo(() => {
-        const navList = [
+    const navItems = useMemo(() => [
             {title: 'Start', to: '/start'},
             {title: 'Oczekujące', to: '/pending'},
             {title: ((loading: boolean, loggedIn: boolean) => { 
                 if (loading) return '...';
                 return loggedIn ? 'Konto' : 'Zaloguj się';
             })(loading, isLoggedIn), to: '/account'},
-        ];
-        console.log('navList ', data)
-
-        return navList;
-    },[isLoggedIn, loading]);
+        ],[isLoggedIn, loading]);
     
     return (
     <nav className={cn('header__nav', {

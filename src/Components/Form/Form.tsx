@@ -1,15 +1,15 @@
-import { FormEvent, useEffect, useState } from "react";
-import { Input } from "../Input/Input";
-import { Button } from "../Button/Button";
-import cn from 'classnames';
-import './Form.scss';
+import { FormEvent, useState } from "react";
+import { Input } from "./Input";
+import { Button } from "./Button";
+import cn from 'classnames'; 
 
 interface InputField {
     id?: string;
     title: string;
     onChange?: (value: string) => void;
     value?: string;
-    type?: 'text' | 'password';
+    type?: 'text' | 'password' | 'email' | 'radio';
+    options?: string[];
 }
 
 interface Props {
@@ -21,14 +21,14 @@ interface Props {
 
 export const Form: React.FC<Props> = ( { fields, submitText, onSubmit, className }) => {
 
-    const [fieldsData, setFieldsData] = useState<{[fieldId: string]: string}>({});
-    useEffect(() => setFieldsData(fields.reduce((data:{[fieldId: string]: string}, field) => {
+    const [fieldsData, setFieldsData] = useState<{[fieldId: string]: string}>(fields
+        .reduce((data:{[fieldId: string]: string}, field) => {
             if (field.id) {
                 data[field.id] = field.value || '';
-            }
+            } 
 
-            return data;
-        }, {})), [fields]);
+            return data; 
+        }, {})); 
 
     return (
         <form 
@@ -48,6 +48,7 @@ export const Form: React.FC<Props> = ( { fields, submitText, onSubmit, className
                 title={field.title}
                 value={field.value || ''} 
                 type={field.type || 'text'}
+                options={field.options}
                 onChange={(value: string) => {
                     if (field.id) {
                         setFieldsData(current => ({...current, [field.id || '']: value}));

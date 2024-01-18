@@ -1,18 +1,10 @@
-import { useDispatch } from "react-redux";
-import { Button } from "../../Button/Button";
-import { Form } from "../../Form/Form";
-import cn from 'classnames';
-import { AppDispatch } from "../../../State/store";
-import { accountLogin, setUsername } from "../../../State/account/accountSlice";
-import { useDialogContext } from "../../../Context/useDialogContext";
-import { Content } from "../../Layout/Content";
+import { Button } from "../../../Components/Form/Button";
+import { Form } from "../../../Components/Form/Form";
+import cn from 'classnames';  
+import { PageSectionParams } from "../types";
+import account from '../../../State/account/asyncReducers'
 
-export const Login: React.FC<{
-    username: string;
-}> = ({ username }) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const dialog = useDialogContext();
-    const param = Content.useParam();
+export const Login: React.FC<PageSectionParams> = ({ dialog, dispatch, param }) => { 
     
     return (<>
         <h2 
@@ -25,12 +17,11 @@ export const Login: React.FC<{
             <Form
                 submitText="Zaloguj się"
                 className="accountPage__form"
-                onSubmit={({ password }) => dispatch(accountLogin({ password, dialog })) }
+                onSubmit={({ username, password }) => dispatch(account.login({ username, password, dialog })) }
                 fields={[
                     { 
-                        title: 'Login',
-                        onChange: (v: string) => dispatch(setUsername(v)),
-                        value: username,
+                        title: 'Nazwa użytkownika', 
+                        id: 'username',
                     },
             
                     {
@@ -40,6 +31,7 @@ export const Login: React.FC<{
                     }
                 ]}
             />
+
             <section className="accountPage__buttons"> 
                 <Button 
                     type="orange-big"

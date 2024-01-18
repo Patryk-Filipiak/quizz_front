@@ -1,4 +1,3 @@
-@import '../../Styles/Mixins/AppLayout.scss';
 .header {
     position: relative; 
     width: 100%;
@@ -7,7 +6,6 @@
     align-items: center;
     justify-content: space-between; 
     padding: 0 8px 0 8px; 
-    @include SpillBackground;
 
     @media(min-width: 500px) {
         padding: 0 12px 0 12px;

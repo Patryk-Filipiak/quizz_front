@@ -2,30 +2,10 @@
 import cn from 'classnames'; 
 import React, { ReactElement, ReactNode, useEffect, useMemo } from 'react';  
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { ContentType } from './types';
 import './Content.scss';
 
-type DependsFunction = (node: ReactNode, dependencies?: boolean[]) => DependsFunction;
 
-interface ContentType {
-    Page: React.FC<{
-        className?: string;
-        children?: ReactNode;
-    }>;
-    Param: React.FC<{
-        children?: ReactNode;
-        selector: string;
-    }>;
-    Tab: React.FC<{
-        children?: ReactNode;
-        id: string;
-    }>;
-    Tabs: React.FC<{
-        children?: ReactNode; 
-        selected?: string;
-    }>; 
-    useParam: () => (params: { [key: string]: string }) => void;
-    depends: () => [DependsFunction, () => ReactNode[]];
-}
 
 export const Content:ContentType = {
     Page({ className, children }) {

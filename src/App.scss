@@ -1,7 +1,4 @@
-@import './Styles/fonts.scss';
-@import './Styles/text.scss';
-@import './Styles/animations.scss';
-@import './Styles/Mixins/AppLayout.scss'; 
+@import './Styles/';
 
 .App {
   background-color: var(--middle-color); 
@@ -19,7 +16,8 @@
   }
 
   &__header {
-    z-index: 666;
+    z-index: 666; 
+    @include SpillBackground;
   }
 
   &__content {
@@ -34,6 +32,7 @@
 
   &__footer {
     z-index: 1;
+    @include SpillBackground;
   }
 
   
