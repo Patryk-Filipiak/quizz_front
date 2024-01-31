@@ -1,15 +1,45 @@
-:root {
-    --head-color: rgba(0, 208, 255, 1); 
-    --middle-color: rgba(252, 148, 3, 1);
-    --foot-color: rgba(136, 3, 252, 1);
+:root {  
+    $layout: (
+      'max-width': '1200px',
+    );
+  
 
-    --font-title: 'Bubblegum Sans', Helvetica, sans-serif;
-    --font-text: 'Roboto', Helvetica, sans-serif;
-    --font-middle: 'Fuzzy Bubbles', Helvetica, sans-serif;
-
-
-    --bg-image: url('../Assets/bg.png'); 
-
-    --max-layout-width: 1200px; 
-    --free-margins-width: calc(50vw - var(--max-layout-width) / 2 + 0px);
+    @media(max-width: 768px ) {
+      --layout-version: 'mobile';
+    }
+    
+    @media(min-width: 769px ) {
+      --layout-version: 'desktop';
+    }
+  
+    $colors: (
+      "orange": '252, 148, 3',
+      "violet": '136, 3, 252',
+      "blue": '0, 208, 255', 
+      "white": '255, 255, 255',
+      "dark": '71, 71, 71',
+      "black": '0, 0, 0',
+    );
+  
+    $fonts: (
+      "title": "'Bubblegum Sans', Helvetica, sans-serif",
+      "text": "'Roboto', Helvetica, sans-serif",
+      "link": "'Fuzzy Bubbles', Helvetica, sans-serif", 
+    );
+  
+    @each $color, $rgb in $colors { 
+      --color-#{$color}: #{$rgb};
+    }
+  
+    @each $type, $fontFamily in $fonts { 
+      --font-#{$type}: #{$fontFamily};
+    }
+   
+    // layout
+    --layout-max-width: 1200px;
+  
+    --layout-background-image: url('../Assets/bg.png'); 
+    --layout-margins-width: calc(50vw - var(--layout-max-width) / 2 + 0px);
+    --layout-tablet-width: 768px;
+   
   }

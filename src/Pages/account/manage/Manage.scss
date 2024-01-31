@@ -1,0 +1,55 @@
+@import '../../../Styles/mixins.scss';
+
+.manager { 
+    display: flex; 
+    flex-direction: column; 
+    border-radius: 16px;
+    flex: 1; 
+    flex-wrap: wrap;
+    gap: 24px;
+        // background-color: rgba(var(--color-white), 1);
+    
+
+    &__info {  
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    } 
+
+    &__actions { 
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        align-items: center;
+        justify-content: space-around; 
+
+        > :nth-child(n){
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+ 
+    }
+
+    &__tab-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 20px;
+        font-family: var(--font-text);
+        cursor: pointer;
+        color: rgba(var(--color-dark), .8);
+
+        &.active {
+            color: rgba(var(--color-dark), 1);
+            font-weight: 700;
+        }
+    }
+
+      
+ 
+}

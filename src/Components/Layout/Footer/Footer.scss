@@ -1,0 +1,10 @@
+@import '../mixins.scss';
+
+.footer {
+    background-color: rgb(var(--color-violet));
+    color: rgb(var(--color-white));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include SplashBackground;
+}

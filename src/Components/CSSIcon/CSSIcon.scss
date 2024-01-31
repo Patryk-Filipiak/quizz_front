@@ -1,90 +1,313 @@
-.icon {
-    position: relative; 
-    box-sizing: border-box;
-    width: 48px;
-    height: 48px;  
+@import '../../Styles/mixins.scss';
 
+@mixin close {
+    
+    & > div {
+        width: calc(var(--icon-size) / 2 - var(--icon-weight) / 2); 
+        height: var(--icon-weight);      
+        transform-origin: top left; 
+        left:  50%;
+        top:  50%;   
 
-    &--close {
-        cursor: pointer;
-
-        & > div {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            background-color: rgba(255, 255, 255, 1); 
-            transform: rotate(45deg);
-
-            &:nth-child(1) {
-                top: calc(50% - 3px);
-                width: 42px;
-                height: 6px;
-            }
-            
-            &:nth-child(2) {
-                left: calc(50% - 3px);
-                width: 6px;
-                height: 42px; 
-            }
+        &:nth-child(1) {   
+            transform: rotate(45deg) translate(0%, -50%); 
         }
+
+        &:nth-child(2) {   
+            transform: rotate(135deg) translate(0%, -50%); 
+        } 
+
+        &:nth-child(3) {   
+            transform: rotate(-45deg) translate(0%, -50%); 
+        }
+
+        &:nth-child(4) {
+            transform: rotate(-135deg) translate(0%, -50%); 
+        } 
+
+        &:nth-child(5) { display: none; }
     }
+}
+
+.icon {   
+    padding: 0;
+    z-index: 1;
+    position: relative; 
+    box-sizing: content-box;
+    width: var(--icon-size);
+    height: var(--icon-size);    
+    max-width: var(--icon-size);
+    max-height: var(--icon-size);    
+    min-width: var(--icon-size);
+    min-height: var(--icon-size);    
+    cursor: pointer;
+    transition: all 0.3s linear;
+    overflow: hidden;
+
+    
+
+    & > div {
+        position: absolute; 
+        background-color: rgba(var(--color-dark), 1);
+        transition: all 0.3s linear; 
+        background-color: var(--icon-background-color);
+    }
+
+
+    &--color {
+        $colors: (
+            "orange": '252, 148, 3',
+            "violet": '136, 3, 252',
+            "blue": '0, 208, 255', 
+            "white": '255, 255, 255',
+            "dark": '71, 71, 71',
+            "black": '0, 0, 0',
+            "positive": '170, 211, 66',
+          );
+         
+        
+          @each $color, $rgb in $colors { 
+            &-#{$color} {
+                & > div { 
+                    --icon-background-color: #{'rgba(#{$rgb}, 1)'}; 
+                }
+            }
+          }    
+    }
+
+    &--type {
+
+        &-mini-burger { 
+            
+            & > div {    
+                height: var(--icon-weight);
+                width: var(--icon-weight);  
+                border-radius: var(--icon-weight);
+                left: calc(50% - var(--icon-weight) / 2); 
+                top: calc(50% - var(--icon-weight)  / 2); 
+
+                &:nth-child(1) { top: var(--icon-weight); }
  
-
-    &--burger { 
-        position: relative;
-
-        & > div {  
-            position: absolute;
-            background-color: rgba(255,255,255, 1);
-            width: 40px;
-            height: 8px;
-            margin: 6px 4px;
-            border-radius: 4px;
-            transition: all 0.2s linear;
-            left: 0;
-
-            &:nth-child(2) {
-                top: 15px;
+                &:nth-child(3) { top: calc(100% - var(--icon-weight) * 2); }
+ 
+                &:nth-child(5) { display: none; }
             }
-
-            &:nth-child(3) {
-                top: 30px;
-            }
-
-            &::after {  
-                content: '';
-                position: absolute; 
-                width: 100%;
-                height: 100%;
-                top: 1px; 
-                left: 1px;
-                border-radius: 4px;
-                background-color: var(--foot-color);
+            
+            &.icon--state-active {
+                 @include close();
             }
         }
 
-        &.open {
-            transform: rotate(45deg);
-            
-            & :nth-child(2) {
-                opacity: 0;
-            }
+        &-close { 
+            & > div {
+                width: calc(var(--icon-size) / 2 - var(--icon-weight) / 2);
+                height: var(--icon-weight);
+                z-index: 0;
+                border-radius: var(--icon-weight);
 
-            & :nth-child(1) {
-                width: 40px;
-                height: 8px; 
-                top: calc(50% - 8px);
-            }
+                &:nth-child(1) {  
+                    transform-origin: top left;
+                    transform: rotate(45deg) translate(0%, -50%);
+                    left: 50%;
+                    top: 50%; 
+                }
 
-            & :nth-child(3) { 
-                width: 8px;
-                height: 40px;
-                top: 0;
-                left: calc(50% - 8px);
+                &:nth-child(2) {  
+                    transform-origin: top right; 
+                    transform: rotate(-45deg) translate(0%, -50%);
+                    right:  50%;
+                    top:  50%;  
+                } 
+ 
+                &:nth-child(3) { 
+                    transform-origin: bottom right; 
+                    transform: rotate(135deg) translate(0%, 50%);
+                    right: 50%;
+                    bottom: 50%;   
+                }
+
+                &:nth-child(4) {  
+                    transform-origin: bottom left;
+                    transform: rotate(-135deg) translate(0%, 50%);
+                    left:  50%;
+                    bottom:  50%; 
+                } 
+                &:nth-child(5) { display: none; }
+            }
+        }
+
+        &-increase { 
+            & > div {  
+                border-radius: var(--icon-weight); 
+                &:nth-child(1) {   
+                    width: calc(var(--icon-size) / 2 - var(--icon-weight));
+                    height: var(--icon-weight);
+                    left: 50%;
+                    top: calc(50% - var(--icon-weight) / 2); 
+                }
+
+                &:nth-child(2) {   
+                    right:  50%;
+                    top: calc(50% - var(--icon-weight) / 2);
+                    width: calc(var(--icon-size) / 2 - var(--icon-weight));
+                    height: var(--icon-weight);
+                } 
+ 
+                &:nth-child(3) {  
+                    right: calc(50% - var(--icon-weight) / 2);
+                    bottom: 50%;   
+                    height: calc(var(--icon-size) / 2 - var(--icon-weight));
+                    width: var(--icon-weight);
+                }
+
+                &:nth-child(4) {    
+                    top:  50%;
+                    left: calc(50% - var(--icon-weight) / 2);
+                    height: calc(var(--icon-size) / 2 - var(--icon-weight));
+                    width: var(--icon-weight); 
+                    
+                } 
+                &:nth-child(5) { display: none; }
+            }
+        }
+
+        &-next { 
+            & > div {   
+                left: calc(50% + var(--icon-weight) / 2); 
+                width: var(--icon-weight);
+                height: calc(var(--icon-size) / 2 - var(--icon-weight) / 2);
+                    
+                &:nth-child(1) {   
+                    bottom: 50%;
+                    transform-origin: bottom right;
+                    transform: rotate(-45deg);
+                     
+                }
+
+                &:nth-child(2) {    
+                    width: var(--icon-weight);
+                    top: 50%;
+                    transform-origin: top right;
+                    transform: rotate(45deg);
+                } 
+ 
+                &:nth-child(3) { display: none; }
+                &:nth-child(4) { display: none; }
+                &:nth-child(5) { display: none; }
+            }
+        }
+
+        &-prev { 
+            & > div {   
+                right: calc(50% + var(--icon-weight) / 2); 
+                width: var(--icon-weight);
+                height: calc(var(--icon-size) / 2 - var(--icon-weight) / 2);  
+                right: calc(50% + var(--icon-weight) / 2);
+
+                &:nth-child(1) {    
+                    bottom: 50%;
+                    transform-origin: bottom left;
+                    transform: rotate(45deg);
+                }
+
+                &:nth-child(2) {    
+                    top: 50%; 
+                    transform-origin: top left;
+                    transform: rotate(-45deg);
+                } 
+ 
+                &:nth-child(3) { display: none; }
+                &:nth-child(4) { display: none; }
+                &:nth-child(5) { display: none; }
+            }
+        } 
+
+        &-burger { 
+            & > div {    
+                height: var(--icon-weight);
+                width: calc(var(--icon-size) - var(--icon-weight) * 2);  
+                border-radius: var(--icon-weight);
+
+                &:nth-child(1) {    
+                    top: var(--icon-weight);
+                    left: var(--icon-weight);
+                }
+
+                &:nth-child(2) {    
+                    top: calc(50% - var(--icon-weight)  / 2);
+                    right: var(--icon-weight);
+                } 
+ 
+                &:nth-child(3) { 
+                    bottom: var(--icon-weight);
+                    right: var(--icon-weight);
+                }
+
+                &:nth-child(4) {  
+                    left: var(--icon-weight);
+                    bottom: calc(50% - var(--icon-weight) / 2); 
+                 }
+                &:nth-child(5) { display: none; }
             } 
         }
-       
 
     }
 
+
+    &--size {
+        &-24 {
+            --border-size: 3px;
+            --icon-size: 24px; 
+            --icon-weight: 4px;
+        }
+
+        &-36 {
+            --border-size: 3px;
+            --icon-size: 36px; 
+            --icon-weight: 6px;
+        }
+
+        &-48 {
+            --border-size: 3px;
+            --icon-size: 48px; 
+            --icon-weight: 8px; 
+        }
+
+        &-60 {
+            --border-size: 3px;
+            --icon-size: 60px; 
+            --icon-weight: 10px;
+        }
+
+        &-72 {
+            --border-size: 3px;
+            --icon-size: 72px; 
+            --icon-weight: 12px;
+        }
+    }
+    
+    &--variant {
+        &-round {
+            border-radius: 100%;
+            background-color: rgba(var(--color-white), 1);
+            border: var(--border-size) solid rgba(var(--color-orange), 1);
+            @include box-shadow((
+                'top': rgba(var(--color-dark), 1)
+            ), 2px); 
+
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.95) rotate(-4deg);
+
+                @include box-shadow((
+                    'inset-top': rgba(var(--color-dark), 1)
+                ), 2px); 
+            }
+        }
+
+    }
 }

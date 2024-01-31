@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { DialogContextInterface } from "../../../Context/Dialog.types";
+import { DialogInterface } from "../../../Context/types";
 import { AuthApi } from "../../../API/Auth";
 import { AccountData, AccountState } from "../types";
 
@@ -7,7 +7,7 @@ const reducer = {
     name: 'login',
     thunk: createAsyncThunk(
         "account/login",
-        async ({ username, password }: { username: string, password: string; dialog: DialogContextInterface }, thunkAPI) => {   
+        async ({ username, password }: { username: string, password: string; dialog: DialogInterface }, thunkAPI) => {   
             if( !password || !username || password.trim().length < 6 || username.trim().length < 3) {
                 throw new Error('Wpisz poprawne dane...');
             }
@@ -28,7 +28,7 @@ const reducer = {
         }).addCase(reducer.thunk.rejected, (state, action) => {
             state.exhausted = false;
             const { dialog } = action.meta.arg; 
-            return dialog.showToast(action.error && action.error.name === 'Error' ? action.error.message || '' : 'Niepoprawne dane logowania.');
+            return dialog.toast.send(action.error && action.error.name === 'Error' ? action.error.message || '' : 'Niepoprawne dane logowania.');
         })
 }
 

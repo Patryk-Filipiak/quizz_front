@@ -1,5 +1,5 @@
 import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
-import { DialogContextInterface } from "../../../Context/Dialog.types";
+import { DialogInterface } from "../../../Context/types";
 import { AuthApi } from "../../../API/Auth";
 import { AccountState } from "../types";
 import { initialState } from "../accountSlice";
@@ -8,7 +8,7 @@ const reducer = {
     name: 'logout',
     thunk: createAsyncThunk(
         "account/logout",
-        async (_: { dialog: DialogContextInterface }, thunkAPI) => (await AuthApi.logout()).data
+        async (_: { dialog: DialogInterface }, thunkAPI) => (await AuthApi.logout()).data
     ),
     
     cases: (builder: ActionReducerMapBuilder<AccountState>) => builder
@@ -17,7 +17,7 @@ const reducer = {
             state.isLoggedIn = false;
         }).addCase(reducer.thunk.rejected, (state, action) => {
             const { dialog } = action.meta.arg; 
-            return dialog.showToast('Błąd wylogowywania? Albo masz problem z internetem, albo już się wylogowałeś na innej karcie :)');
+            return dialog.toast.send('Błąd wylogowywania? Albo masz problem z internetem, albo już się wylogowałeś na innej karcie :)');
         })
 }
 
