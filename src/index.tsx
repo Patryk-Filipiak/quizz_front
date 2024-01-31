@@ -1,21 +1,24 @@
-import ReactDOM from 'react-dom/client';
-import App from './App';  
+import ReactDOM from 'react-dom/client'; 
 import { Provider } from "react-redux";
 import { store } from './State/store';
-import { DialogProvider } from './Context/Dialog.context'; 
-import './Styles/reset.scss';
-import './Styles/variables.scss';
-import './Styles/fonts.scss';
-import './Styles/text.scss';
-import './Styles/animations.scss';
-import './Styles/mixins.scss'; 
+import { AppProvider, useAppContext } from './Context/AppContext'; 
+import { Layout } from './Components/Layout/Layout'; 
+import './Styles/index.scss';
+import { BrowserRouter } from "react-router-dom"; 
+
+export const AppLayout = () => {
+  const context = useAppContext(); 
+  return <Layout context={context } />
+}
 
 ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 ).render(
   <Provider store={store}>
-    <DialogProvider>
-      <App />
-    </DialogProvider>
+    <BrowserRouter>
+      <AppProvider>
+        <AppLayout />
+      </AppProvider>
+    </BrowserRouter>
   </Provider>
 ); 

@@ -6,11 +6,6 @@ interface AccountData {
 
 const BASE_URL: string = 'http://localhost/api/auth';
 
-export enum FLAGS {
-    'IS_ACTIVE' = 1,
-    'CAN_SEE_PANEL' = 2,
-}
-
 export abstract class AuthApi {
     static check = async ():Promise<{ data: AccountData}> => axios.get(BASE_URL, {
         withCredentials: true,
@@ -35,12 +30,4 @@ export abstract class AuthApi {
     static logout = async () => axios.post(`${BASE_URL}/logout`, {}, {
         withCredentials: true,
     });
-
-    static changePassword = async (newPassword: string, oldPassword: string) => axios.patch('http://localhost/auth/password', {
-        newPassword, oldPassword
-    }, {
-        withCredentials: true,
-    })
-}
-
-// Add more methods here
+} 

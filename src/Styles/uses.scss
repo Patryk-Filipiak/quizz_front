@@ -1,0 +1,18 @@
+@mixin useResponsive { 
+  @media(max-width: 768px) {
+    @include Mobile;
+  }
+  @media(min-width: 769px ) {
+    @include Desktop;
+  }
+}
+
+@mixin useChildCount {
+  --child-count: 0;
+
+  @for $i from 1 through 5 {
+      &:has(> *:nth-child(#{$i})) {
+          --child-count: #{$i}; 
+      }  
+  }
+}

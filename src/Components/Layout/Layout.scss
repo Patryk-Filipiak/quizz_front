@@ -1,0 +1,128 @@
+@import './mixins.scss';
+
+    $body-color: rgb(var(--color-orange));
+    $layout-max-width: 1200px;
+
+
+    @mixin Mobile {
+        &__header {
+            padding: 0 32px;
+        } 
+    }
+
+    @mixin Desktop {
+        &__header {
+            padding: 0 0 0 32px;
+        }
+    }
+
+    
+
+.App {   
+    @include useResponsive;
+    background-color:  $body-color;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;  
+
+    &__header { 
+        max-width: $layout-max-width; 
+        background-color: rgba(var(--color-blue), 1);
+        width: 100%;  
+        z-index: 98;
+        height: 100px;
+        @include SplashBackground(); 
+
+        &::after { 
+            @include box-shadow((
+                'left': rgba(var(--color-black), .5), 
+                'right': rgba(var(--color-black), .5), 
+                'bottom': rgba(var(--color-black), .5), 
+            ), 10px, -10px, 10px);  
+        }
+    } 
+
+    &__header-link {
+        padding: 0 32px;
+        text-decoration: none;
+        font-family: var(--font-link); 
+        text-shadow: 1px 1px rgba(var(--color-dark), 1);
+        white-space: nowrap;   
+        font-size: 20px;
+        color: rgb(var(--color-white));
+        background-color: rgba(var(--color-violet), .1);
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        transition: all 0.3s linear;
+
+        &:not(:last-child) { 
+            border-right: 1px solid rgba(var(--color-white), .2)
+        }
+
+        &:hover {
+            background-color: rgb(var(--color-violet));
+            box-shadow: inset 0px 2px 24px 5px rgba(var(--color-dark), .5);
+        }
+    }
+
+    &__page { 
+        position: relative;
+        max-width: $layout-max-width; 
+        width: 100%;
+        flex: 1;
+        z-index: 1;
+        background-position: center;
+        background-size: cover;
+         
+        background-image: var(--layout-background-image); 
+        @include box-shadow((
+            'left': rgba(var(--color-black), .5), 
+            'right': rgba(var(--color-black), .5), 
+        ), 10px, -10px, 10px);  
+
+        &::before {
+            content: '';
+            position: absolute;  
+            z-index: -1;
+            @include Overlay;
+            @include box-shadow( ('inset-top': rgba(var(--color-black), .4)), 10px, 10px, 20px); 
+        }
+    }
+
+    &__footer { 
+        max-width: $layout-max-width;
+        width: 100%;
+        z-index: 3;
+    }
+ 
+
+    &__toasts {  
+        position: fixed;
+        z-index: 99;
+        bottom: 50px; 
+        max-width: $layout-max-width; 
+        max-height: calc(100% - 150px);
+    }
+
+    &__popup {
+        position: fixed;
+        background-color: rgb(var(--color-dark), .9);
+        width: 100%;
+        max-width: var(--layout-max-width);
+        top: 0; 
+        bottom: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:empty {
+            display: none;
+        }
+    }
+} 

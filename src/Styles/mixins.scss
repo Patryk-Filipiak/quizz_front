@@ -1,63 +1,23 @@
-@mixin OverlayInside {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0; 
-}
+@use 'sass:list'; 
 
-@mixin SpillBackground {
-    position: relative;
-    
-    &::before {
-        content: ''; 
-        position: absolute;
-        background-color: inherit;  
-        left: calc(var(--free-margins-width) * -1); 
-        right: calc(var(--free-margins-width) * -1); 
-        top: 0;
-        bottom: 0;
-        z-index: -1; 
-    }
-  
-    &::after {
-        content: '';
-        z-index: -1; 
-        background-color: inherit;   
-        @include OverlayInside;
-    }
+@mixin box-shadow($sides, $size: 10px, $spread: calc($size / 2), $blur: calc($size + $spread)) { 
+    $shadows: (); 
+    $sidesMap: (
+        'top': (0px $size $blur $spread), 
+        'bottom': (0px (-$size) $blur $spread), 
+        'left': ($size 0px $blur $spread), 
+        'right': ((-$size) 0px $blur $spread),  
+        'inset-top': (inset 0px $size $blur $spread), 
+        'inset-bottom': (inset 0px (-$size) $blur $spread), 
+        'inset-left': (inset $size 0px $blur $spread), 
+        'inset-right': (inset (-$size) 0px $blur $spread), 
+    );
  
-    &:first-child {
-        &::after {
-            box-shadow: 0px 3px 10px -3px rgba(71, 71, 71, .7);
-        }
-
-        &::before {
-            border-bottom: 2px solid rgba(255, 255, 255, 1);
-        }
-    }
-
-    &:last-child {
-        &::after {
-            box-shadow: 0px -3px 10px -3px rgba(71, 71, 71, .7); 
-        }
-    
-        &::before {
-           border-top: 2px solid rgba(255, 255, 255, 1);
-        }
-    }
-}
-
-@mixin SimplePadding {
-    @media(min-width: 500px) {
-        padding: 32px 24px;
-    }
-
-    @media(min-width: 900px) {
-        padding: 36px 32px;
-    }
-
-    @media(min-width: 1200px) {
-        padding: 48px 64px;
-    }
+    @each $side, $color in $sides { 
+        $shadows: list.append($shadows, list.join(map-get($sidesMap, $side), $color), $separator: comma);
+    }                
+   
+    box-shadow: $shadows;
+    -webkit-box-shadow: $shadows;               
+    -moz-box-shadow: $shadows;
 }

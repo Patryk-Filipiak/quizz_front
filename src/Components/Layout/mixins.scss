@@ -1,0 +1,66 @@
+
+@use 'sass:list'; 
+
+@import '../../Styles/mixins.scss';
+@import '../../Styles/uses.scss'; 
+
+@mixin box-shadow($sides, $size: 10px, $spread: calc($size / 2), $blur: calc($size + $spread)) { 
+    $shadows: (); 
+    $sidesMap: (
+        'top': (0px $size $blur $spread), 
+        'bottom': (0px (-$size) $blur $spread), 
+        'left': ($size 0px $blur $spread), 
+        'right': ((-$size) 0px $blur $spread),  
+        'inset-top': (inset 0px $size $blur $spread), 
+        'inset-bottom': (inset 0px (-$size) $blur $spread), 
+        'inset-left': (inset $size 0px $blur $spread), 
+        'inset-right': (inset (-$size) 0px $blur $spread), 
+    );
+ 
+    @each $side, $color in $sides { 
+        $shadows: list.append($shadows, list.join(map-get($sidesMap, $side), $color), $separator: comma);
+    }                
+   
+    box-shadow: $shadows;
+    -webkit-box-shadow: $shadows;               
+    -moz-box-shadow: $shadows;
+}
+
+@mixin SplashBackground {
+    position: relative;
+
+    &::before {
+        content: ''; 
+        position: absolute;
+        background-color: inherit;  
+        left: calc(var(--layout-margins-width) * -1); 
+        right: calc(var(--layout-margins-width) * -1); 
+        top: 0;
+        bottom: 0;
+        z-index: -1; 
+    }
+
+    &::after {
+        content: '';
+        z-index: -1; 
+        background-color: inherit;   
+        @include Overlay;
+    }
+
+    &:first-child::before {  
+        border-bottom: 2px solid rgb(var(--color-white));
+
+    }
+
+    &:last-child::before {
+        border-top: 2px solid rgb(var(--color-white));
+    }
+}
+
+@mixin Overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; 
+}

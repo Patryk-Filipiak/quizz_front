@@ -1,0 +1,84 @@
+@import '../../Styles/mixins.scss';
+
+.button {
+    font-size: 20px;
+    font-family: var(--font-text);
+    border-radius: 12px;
+    padding: 12px 36px;
+    cursor: pointer;
+    border: 2px solid rgba(var(--color-dark), .5);
+    white-space: nowrap;
+    --background-color: rgba(255, 255, 255, 1);
+
+
+    &--small {
+        font-size: 16px; 
+        border-radius: 8px;
+        padding: 8px 24px;
+        color: rgba(var(--color-black), .8);
+    }
+    
+    
+
+    &--submit {
+        color: rgba(var(--color-dark), 1);
+        background-color: rgb(170, 211, 66);
+        transition: all 0.3s linear;
+
+        @include box-shadow((
+            'inset-bottom': rgba(var(--color-black), .5), 
+        ), 8px, -3px, 10px);
+    
+        &:hover {
+            transform: scale(1.01);
+        }
+    
+        &:active { 
+            color: rgba(var(--color-white), .8);
+            text-shadow: 1px 1px rgba(var(--color-black),1);
+            transform: scale(.99);
+            @include box-shadow((
+                'inset-left': rgba(var(--color-black), .2), 
+                'inset-right': rgba(var(--color-black), .2), 
+                'inset-bottom': rgba(var(--color-black), .75), 
+            ), 25px, -3px, 35px);
+        }
+    }
+
+    &--simple {
+        border: 3px solid;
+        background-color: var(--background-color);
+        color: var(--color);
+        transition: all 0.3s linear;
+
+        &:hover {
+            background-color: var(--color);
+            color: var(--background-color);
+        }
+
+        &.active {
+            background-color: var(--color);
+            color: var(--background-color);
+        }
+    }
+
+    &--blue {
+        background-color: rgba(var(--color-blue), 1);
+    }
+    &--orange {        
+        color: rgba(var(--color-white), 1);
+        text-shadow: 1px 1px rgba(var(--color-black),1);
+        background-color: rgba(var(--color-orange), 1);
+    }
+    &--violet {
+        color: rgba(var(--color-white), 1);
+        text-shadow: 1px 1px rgba(var(--color-black),1);
+        background-color: rgba(var(--color-violet), 1);
+    }
+
+    &--color {
+        &-orange { 
+            --color: rgba(var(--color-orange), 1);
+        }
+    }
+}

@@ -1,0 +1,62 @@
+@import '../../Styles/uses.scss';
+@import '../../Components/CSSIcon/CSSIcon.scss';
+
+@mixin Mobile {
+    &__link-list {
+        display: none;
+        flex-direction: column;
+        top: 100%;
+        right: 0;
+        z-index: -1;
+    }
+
+}
+
+@mixin Desktop {
+
+    &__link-list {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__icon {
+        display: none;
+    }
+}
+
+.nav {
+    @include useResponsive; 
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    background-color: inherit;
+
+    &__hidden-checkbox {
+        display: none;
+        
+        &:checked ~ .nav__icon {
+            @include close;
+        }
+        &:checked ~ .nav__link-list { 
+            display: flex;
+            position: absolute;
+        }
+    }
+
+    &__icon { 
+        align-self: center;
+        --icon-size: 64px;  
+        --icon-weight: 10px;
+
+        &--page {
+            --icon-size: 48px;  
+            --icon-weight: 8px; 
+        }
+    }
+
+    &__link-list {   
+        align-items: stretch; 
+        background-color: inherit;
+
+    }
+}
